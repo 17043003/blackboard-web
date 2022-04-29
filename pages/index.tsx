@@ -13,9 +13,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-        Welcome to picture chat!
-        </h1>
+        <h1 className={styles.title}>Welcome to picture chat!</h1>
 
         <p className={styles.description}>
           Chat with drawing image and character.

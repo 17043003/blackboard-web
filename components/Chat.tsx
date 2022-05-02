@@ -35,7 +35,7 @@ const Chat = ({ socketUrl }: { socketUrl: string }): JSX.Element => {
   }, [receivedMsg]);
   return (
     <>
-      <ul>
+      <ul className={"font-mono"}>
         {messages.map((message, index) => (
           <li key={index}>{message}</li>
         ))}

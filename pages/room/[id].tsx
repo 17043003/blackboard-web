@@ -19,8 +19,22 @@ const Room: NextPage = () => {
 
   return (
     <>
-      <h1>Room:{id}</h1>
-      <Chat socketUrl={socketUrl} />
+      <div className={"bg-gray-400"}>
+        <h1
+          className={
+            "font-bold tracking-wider text-green-700 sm:text-4xl text-2xl ml-4 mb-2 pt-2"
+          }
+        >
+          Room:{id}
+        </h1>
+      </div>
+      <div className={"flex"}>
+        <div className={"flex-initial w-3/12"}>Menu</div>
+        <div className={"flex-initial w-6/12"}>Canvas</div>
+        <div className={"flex-initial w-3/12"}>
+          <Chat socketUrl={socketUrl} />
+        </div>
+      </div>
     </>
   );
 };

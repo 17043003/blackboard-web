@@ -1,15 +1,16 @@
 import { useState } from "react";
 
 type ModalProps = {
-    setValue: (value: string) => void
-}
+  setValue: (value: string) => void;
+  message: string;
+};
 
-const Modal = ({setValue}: ModalProps): JSX.Element => {
-    const [formText, setFormText] = useState("");
+const Modal = ({ setValue, message }: ModalProps): JSX.Element => {
+  const [formText, setFormText] = useState("");
 
-    const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-        setFormText(e.target.value);
-    }
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    setFormText(e.target.value);
+  };
 
   return (
     <div
@@ -17,10 +18,37 @@ const Modal = ({setValue}: ModalProps): JSX.Element => {
         "fixed bg-slate-600 w-full h-full opacity-90 flex justify-center items-center"
       }
     >
-      <div className={""}>
-        <label htmlFor="name">Name:</label>
-        <input type="text" onChange={handleChange}/>
-        <button onClick={() => setValue(formText)}>OK</button>
+      <div
+        className={
+          "flex flex-col items-center bg-red-100 sm:w-1/3 w-9/12 h-32 rounded"
+        }
+      >
+        <div className={"flex-initial w-full"}>
+          <h2 className={"font-bold mt-3 text-center"}>{message}</h2>
+        </div>
+        <div className={"flex-initial my-2"}>
+          <input
+            className={
+              "drop-shadow-xl focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1"
+            }
+            type="text"
+            onChange={handleChange}
+            onKeyPress={(e) => {
+              if (e.key == "Enter") {
+                e.preventDefault();
+                setValue(formText);
+              }
+            }}
+          />
+        </div>
+        <button
+          className={
+            "bg-sky-500 font-bold w-1/4 mt-4 mx-auto rounded drop-shadow-xl"
+          }
+          onClick={() => setValue(formText)}
+        >
+          OK
+        </button>
       </div>
     </div>
   );

@@ -1,14 +1,14 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useState } from 'react';
+import { useState } from "react";
 import Chat from "../../components/Chat";
 import Modal from "../../components/Modal";
 
 type ChatRoomProps = {
-  id: string | string[],
-  name: string,
-  socketUrl: string,
-}
+  id: string | string[];
+  name: string;
+  socketUrl: string;
+};
 
 const Room: NextPage = () => {
   const [name, setName] = useState("");
@@ -28,18 +28,19 @@ const Room: NextPage = () => {
 
   return (
     <>
-      {name ? 
-      <ChatRoom {...{id, name, socketUrl}}/>
-      : <Modal setValue={setName}/>
-}
+      {name ? (
+        <ChatRoom {...{ id, name, socketUrl }} />
+      ) : (
+        <Modal setValue={setName} message={"Enter your name"} />
+      )}
     </>
   );
 };
 
-const ChatRoom = ({id, name, socketUrl}: ChatRoomProps) => {
-  return(
+const ChatRoom = ({ id, name, socketUrl }: ChatRoomProps) => {
+  return (
     <>
-    <div className={"bg-gray-400"}>
+      <div className={"bg-gray-400"}>
         <h1
           className={
             "font-bold tracking-wider text-green-700 sm:text-4xl text-2xl ml-4 pt-2"
@@ -56,8 +57,8 @@ const ChatRoom = ({id, name, socketUrl}: ChatRoomProps) => {
           <Chat socketUrl={socketUrl} />
         </div>
       </div>
-      </>
-  )
-}
+    </>
+  );
+};
 
 export default Room;

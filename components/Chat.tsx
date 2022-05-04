@@ -47,7 +47,7 @@ const Chat = ({ socketUrl }: { socketUrl: string }): JSX.Element => {
   }, [receivedMsg]);
   return (
     <div className={"flex flex-col h-full"}>
-      <div className={""}>
+      <div className={"break-words whitespace-pre-wrap"}>
         <ul className={"font-mono"}>
           {messages.map((message, index) => (
             <li key={index} className={"mb-4"}>

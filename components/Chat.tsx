@@ -1,5 +1,6 @@
 import useWebSocket, { ReadyState } from "react-use-websocket";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 const Chat = ({ socketUrl }: { socketUrl: string }): JSX.Element => {
   const [messages, setMessages] = useState<string[]>([]);
@@ -55,15 +56,19 @@ const Chat = ({ socketUrl }: { socketUrl: string }): JSX.Element => {
           ))}
         </ul>
       </div>
-      <div className={"overflow-auto"}>
+      <div className={"overflow-auto bg-lime-100"}>
         <input
-          className={"placeholder:italic placeholder:text-slate-400"}
+          className={
+            "m-2 placeholder:italic placeholder:text-slate-400 drop-shadow-xl focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1"
+          }
           type="text"
           placeholder="Enter message"
           onChange={handleWillSendMsg}
           value={willSendMsg}
         />
-        <button onClick={handleSendMsg}>Submit</button>
+        <button className={""} onClick={handleSendMsg}>
+          <Image src="/send.svg" width={24} height={24} />
+        </button>
       </div>
     </div>
   );

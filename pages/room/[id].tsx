@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import Chat from "../../components/Chat";
 import Modal from "../../components/Modal";
+import Blackboard from "../../components/Blackboard";
 
 type ChatRoomProps = {
   id: string | string[];
@@ -52,7 +53,9 @@ const ChatRoom = ({ id, name, socketUrl }: ChatRoomProps) => {
       </div>
       <div className={"flex"}>
         <div className={"flex-initial w-3/12"}>Menu</div>
-        <div className={"flex-initial w-6/12"}>Canvas</div>
+        <div className={"flex-initial w-6/12"}>
+          <Blackboard />
+        </div>
         <div className={"flex-initial w-3/12"}>
           <Chat socketUrl={socketUrl} />
         </div>

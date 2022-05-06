@@ -4,6 +4,7 @@ import { useState } from "react";
 import Chat from "../../components/Chat";
 import Modal from "../../components/Modal";
 import Blackboard from "../../components/Blackboard";
+import Menu from "../../components/Menu";
 
 type ChatRoomProps = {
   id: string | string[];
@@ -52,7 +53,9 @@ const ChatRoom = ({ id, name, socketUrl }: ChatRoomProps) => {
         <p className={"mb-1 ml-4"}>You : {name}</p>
       </div>
       <div className={"flex"}>
-        <div className={"flex-initial w-3/12"}>Menu</div>
+        <div className={"flex-initial w-3/12"}>
+          <Menu />
+        </div>
         <div className={"flex-initial w-6/12"}>
           <Blackboard />
         </div>

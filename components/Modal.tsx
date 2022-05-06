@@ -15,8 +15,8 @@ const Modal = ({ setValue, message }: ModalProps): JSX.Element => {
 
   // Set focus.
   useEffect(() => {
-      editBox.current?.focus();
-  }, [])
+    editBox.current?.focus();
+  }, []);
 
   return (
     <div

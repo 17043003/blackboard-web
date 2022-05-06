@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FigureKind } from "../components/Menu";
-import Figure from "../utils/figure/Figure";
-import Line from "../utils/figure/Line";
-import { figureFactory } from "../utils/figure/FigureFactory"
+import { figureFactory } from "../utils/figure/FigureFactory";
 
 type Coordinate = {
   x: number;
@@ -58,7 +56,7 @@ const Blackboard = ({ figureKind }: BlackboardProps): JSX.Element => {
       ...coordinate,
       end: { x: clientX, y: clientY },
     });
-    
+
     const figure = figureFactory(figureKind);
     figure.x1 = coordinate.start.x;
     figure.y1 = coordinate.start.y;

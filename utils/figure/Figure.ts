@@ -1,8 +1,8 @@
 interface Figure {
-  width: number;
-  height: number;
-  x: number;
-  y: number;
+  x1: number;
+  y1: number;
+  x2: number;
+  y2: number;
   fill: boolean;
   lineWidth: number;
   lineDash: boolean;

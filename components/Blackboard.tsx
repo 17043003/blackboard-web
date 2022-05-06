@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { FigureKind } from "../components/Menu";
 
 type Coordinate = {
   x: number;
@@ -12,7 +13,11 @@ type MouseOperateCoordinate = {
   end: Coordinate;
 };
 
-const Blackboard = (): JSX.Element => {
+type BlackboardProps = {
+  figureKind: FigureKind;
+};
+
+const Blackboard = ({ figureKind }: BlackboardProps): JSX.Element => {
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
 

@@ -4,7 +4,7 @@ import { useState } from "react";
 import Chat from "../../components/Chat";
 import Modal from "../../components/Modal";
 import Blackboard from "../../components/Blackboard";
-import Menu from "../../components/Menu";
+import Menu, { FigureKind } from "../../components/Menu";
 
 type ChatRoomProps = {
   id: string | string[];
@@ -40,6 +40,7 @@ const Room: NextPage = () => {
 };
 
 const ChatRoom = ({ id, name, socketUrl }: ChatRoomProps) => {
+  const [menuSelect, setMenuSelect] = useState<FigureKind>("circle");
   return (
     <>
       <div className={"bg-gray-400"}>
@@ -54,10 +55,10 @@ const ChatRoom = ({ id, name, socketUrl }: ChatRoomProps) => {
       </div>
       <div className={"flex"}>
         <div className={"flex-initial w-3/12"}>
-          <Menu />
+          <Menu setSelect={setMenuSelect} />
         </div>
         <div className={"flex-initial w-6/12"}>
-          <Blackboard />
+          <Blackboard figureKind={menuSelect} />
         </div>
         <div className={"flex-initial w-3/12"}>
           <Chat socketUrl={socketUrl} />

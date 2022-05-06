@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FigureKind } from "../components/Menu";
+import Figure from "../utils/figure/Figure";
+import Line from "../utils/figure/Line";
 
 type Coordinate = {
   x: number;
@@ -26,6 +28,8 @@ const Blackboard = ({ figureKind }: BlackboardProps): JSX.Element => {
     start: { x: -1, y: -1 },
     end: { x: -1, y: -1 },
   });
+
+  const [figure, setFigure] = useState<Figure>(new Line);
 
   useEffect(() => {
     if (canvas.current == null) return;
@@ -55,7 +59,14 @@ const Blackboard = ({ figureKind }: BlackboardProps): JSX.Element => {
       ...coordinate,
       end: { x: clientX, y: clientY },
     });
-    context?.fillRect(coordinate.start.x, coordinate.start.y, sizes.x, sizes.y);
+    // context?.fillRect(coordinate.start.x, coordinate.start.y, sizes.x, sizes.y);
+    figure.x = coordinate.start.x;
+    figure.y = coordinate.start.y;
+    figure.width = sizes.x
+    figure.height = sizes.y
+    if(context){
+        figure.Draw(context);
+    }
   };
 
   // Convert click coordinate on canvas.

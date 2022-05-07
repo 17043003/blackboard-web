@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
+import useWebSocket, { ReadyState } from "react-use-websocket";
 import { FigureKind } from "../components/Menu";
 import { figureFactory } from "../utils/figure/FigureFactory";
+import Figure from "../utils/figure/Figure";
 
 type Coordinate = {
   x: number;
@@ -16,9 +18,13 @@ type MouseOperateCoordinate = {
 
 type BlackboardProps = {
   figureKind: FigureKind;
+  socketUrl: string;
 };
 
-const Blackboard = ({ figureKind }: BlackboardProps): JSX.Element => {
+const Blackboard = ({
+  figureKind,
+  socketUrl,
+}: BlackboardProps): JSX.Element => {
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
   const [surfaceContext, setSurfaceContext] =
     useState<CanvasRenderingContext2D | null>(null);
@@ -30,6 +36,31 @@ const Blackboard = ({ figureKind }: BlackboardProps): JSX.Element => {
   const [coordinate, setCoordinate] = useState<MouseOperateCoordinate>({
     start: { x: -1, y: -1 },
     end: { x: -1, y: -1 },
+  });
+
+  const {
+    sendMessage,
+    sendJsonMessage,
+    lastMessage,
+    lastJsonMessage,
+    readyState,
+    getWebSocket,
+  } = useWebSocket(socketUrl, {
+    share: true,
+    onMessage: (ev) => {
+      try {
+        const jsonObject = JSON.parse(ev.data) as Figure;
+        const initFigure = figureFactory(jsonObject.kind as FigureKind);
+        if (initFigure == null) return;
+
+        const figure = Object.assign(initFigure, jsonObject);
+        if (context) {
+          figure.Draw(context);
+        }
+      } catch (e) {
+        console.log(`${e}`);
+      }
+    },
   });
 
   useEffect(() => {
@@ -59,18 +90,16 @@ const Blackboard = ({ figureKind }: BlackboardProps): JSX.Element => {
     const { clientX, clientY } = getCoordinateOnCanvas(e.clientX, e.clientY);
     setCoordinate({ ...coordinate, end: { x: clientX, y: clientY } });
 
-    const sizes = calculateSize({
-      ...coordinate,
-      end: { x: clientX, y: clientY },
-    });
-
     const figure = figureFactory(figureKind);
+    if (figure == null) return;
+
     figure.x1 = coordinate.start.x;
     figure.y1 = coordinate.start.y;
     figure.x2 = clientX;
     figure.y2 = clientY;
     if (context) {
       figure.Draw(context);
+      sendJsonMessage(figure);
     }
   };
 
@@ -81,6 +110,8 @@ const Blackboard = ({ figureKind }: BlackboardProps): JSX.Element => {
 
     const { clientX, clientY } = getCoordinateOnCanvas(e.clientX, e.clientY);
     const figure = figureFactory(figureKind);
+    if (figure == null) return;
+
     figure.x1 = coordinate.start.x;
     figure.y1 = coordinate.start.y;
     figure.x2 = clientX;

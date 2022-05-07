@@ -58,7 +58,7 @@ const ChatRoom = ({ id, name, socketUrl }: ChatRoomProps) => {
           <Menu setSelect={setMenuSelect} />
         </div>
         <div className={"flex-initial w-6/12"}>
-          <Blackboard figureKind={menuSelect} />
+          <Blackboard figureKind={menuSelect} socketUrl={socketUrl} />
         </div>
         <div className={"flex-initial w-3/12"}>
           <Chat socketUrl={socketUrl} />

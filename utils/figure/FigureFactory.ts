@@ -4,7 +4,7 @@ import Line from "../figure/Line";
 import { FigureKind } from "../../components/Menu";
 import Square from "./Square";
 
-export const figureFactory = (kind: FigureKind): Figure => {
+export const figureFactory = (kind: FigureKind): Figure | null => {
   switch (kind) {
     case "circle":
       return new Circle();
@@ -13,6 +13,6 @@ export const figureFactory = (kind: FigureKind): Figure => {
     case "square":
       return new Square();
     default:
-      return new Line();
+      return null;
   }
 };

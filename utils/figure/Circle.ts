@@ -1,6 +1,7 @@
 import Figure from "./Figure";
 
 class Circle implements Figure {
+  kind = "circle";
   x1 = 0;
   y1 = 0;
   x2 = 0;

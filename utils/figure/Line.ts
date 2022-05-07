@@ -1,6 +1,7 @@
 import Figure from "./Figure";
 
 class Line implements Figure {
+  kind = "line";
   x1 = 0;
   y1 = 0;
   x2 = 0;

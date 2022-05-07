@@ -20,8 +20,12 @@ type BlackboardProps = {
 
 const Blackboard = ({ figureKind }: BlackboardProps): JSX.Element => {
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
+  const [surfaceContext, setSurfaceContext] =
+    useState<CanvasRenderingContext2D | null>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
+  const surfaceCanvas = useRef<HTMLCanvasElement>(null);
 
+  const [isDragging, setIsDragging] = useState(false);
   const [size, setSize] = useState(100);
   const [coordinate, setCoordinate] = useState<MouseOperateCoordinate>({
     start: { x: -1, y: -1 },
@@ -29,9 +33,10 @@ const Blackboard = ({ figureKind }: BlackboardProps): JSX.Element => {
   });
 
   useEffect(() => {
-    if (canvas.current == null) return;
+    if (canvas.current == null || surfaceCanvas.current == null) return;
     console.log("get context.");
     setContext(canvas.current.getContext("2d"));
+    setSurfaceContext(surfaceCanvas.current.getContext("2d"));
   }, []);
 
   const handleTouchStart: React.TouchEventHandler<HTMLCanvasElement> = (e) => {
@@ -46,9 +51,11 @@ const Blackboard = ({ figureKind }: BlackboardProps): JSX.Element => {
   const handleMouseDown: React.MouseEventHandler<HTMLCanvasElement> = (e) => {
     const { clientX, clientY } = getCoordinateOnCanvas(e.clientX, e.clientY);
     setCoordinate({ ...coordinate, start: { x: clientX, y: clientY } });
+    setIsDragging(true);
   };
 
   const handleMouseUp: React.MouseEventHandler<HTMLCanvasElement> = (e) => {
+    setIsDragging(false);
     const { clientX, clientY } = getCoordinateOnCanvas(e.clientX, e.clientY);
     setCoordinate({ ...coordinate, end: { x: clientX, y: clientY } });
 
@@ -64,6 +71,22 @@ const Blackboard = ({ figureKind }: BlackboardProps): JSX.Element => {
     figure.y2 = clientY;
     if (context) {
       figure.Draw(context);
+    }
+  };
+
+  // Draw temporary figure on surface canvas while dragging.
+  const handleMouseMove: React.MouseEventHandler<HTMLCanvasElement> = (e) => {
+    if (!isDragging) return;
+    surfaceContext?.clearRect(0, 0, 400, 400);
+
+    const { clientX, clientY } = getCoordinateOnCanvas(e.clientX, e.clientY);
+    const figure = figureFactory(figureKind);
+    figure.x1 = coordinate.start.x;
+    figure.y1 = coordinate.start.y;
+    figure.x2 = clientX;
+    figure.y2 = clientY;
+    if (surfaceContext) {
+      figure.Draw(surfaceContext);
     }
   };
 
@@ -89,17 +112,23 @@ const Blackboard = ({ figureKind }: BlackboardProps): JSX.Element => {
   };
 
   return (
-    <div className="h-full m-1">
+    <div className="h-full m-1 relative">
       <canvas
         width="400"
         height="400"
         ref={canvas}
-        className="outline"
+        className="outline absolute"
+      ></canvas>
+      <canvas
+        width="400"
+        height="400"
+        ref={surfaceCanvas}
+        className="outline absolute opacity-10"
         onTouchStart={handleTouchStart}
         onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
       ></canvas>
-      {figureKind}
     </div>
   );
 };

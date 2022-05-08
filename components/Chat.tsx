@@ -1,6 +1,9 @@
 import useWebSocket, { ReadyState } from "react-use-websocket";
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { FigureKind } from "../components/Menu";
+import { figureFactory } from "../utils/figure/FigureFactory";
+import Figure from "../utils/figure/Figure";
 
 const Chat = ({ socketUrl }: { socketUrl: string }): JSX.Element => {
   const [messages, setMessages] = useState<string[]>([]);
@@ -18,12 +21,19 @@ const Chat = ({ socketUrl }: { socketUrl: string }): JSX.Element => {
     onOpen: () => {
       if (readyState != ReadyState.OPEN) {
         console.log("opened");
-        sendMessage("Connected!");
+        sendMessage(`{"chat":{"chatmessage":"Connected!"}}`);
       }
     },
     onMessage: (ev) => {
       console.log(ev.data);
-      setReceivedMsg(ev.data);
+      try {
+        const jsonObject = JSON.parse(ev.data);
+        if (jsonObject?.chat != null) {
+          setReceivedMsg(jsonObject?.chat.chatmessage);
+        }
+      } catch (e) {
+        console.log(e);
+      }
     },
 
     shouldReconnect: (closeEvent) => {
@@ -37,7 +47,7 @@ const Chat = ({ socketUrl }: { socketUrl: string }): JSX.Element => {
 
   const handleSendMsg = () => {
     if (willSendMsg == "") return;
-    sendMessage(willSendMsg);
+    sendMessage(`{"chat":{"chatmessage":"${willSendMsg}"}}`);
     setWillSendMsg("");
   };
 

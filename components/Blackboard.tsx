@@ -49,13 +49,16 @@ const Blackboard = ({
     share: true,
     onMessage: (ev) => {
       try {
-        const jsonObject = JSON.parse(ev.data) as Figure;
-        const initFigure = figureFactory(jsonObject.kind as FigureKind);
-        if (initFigure == null) return;
-
-        const figure = Object.assign(initFigure, jsonObject);
-        if (context) {
-          figure.Draw(context);
+        const jsonObject = JSON.parse(ev.data);
+        if (jsonObject?.figure != null) {
+          const initFigure = figureFactory(
+            jsonObject.figure.kind as FigureKind
+          );
+          if (initFigure == null) return;
+          const figure: Figure = Object.assign(initFigure, jsonObject.figure);
+          if (context) {
+            figure.Draw(context);
+          }
         }
       } catch (e) {
         console.log(`${e}`);
@@ -99,7 +102,8 @@ const Blackboard = ({
     figure.y2 = clientY;
     if (context) {
       figure.Draw(context);
-      sendJsonMessage(figure);
+      //   sendJsonMessage(figure);
+      sendMessage(`{"figure":${JSON.stringify(figure)}}`);
     }
   };
 

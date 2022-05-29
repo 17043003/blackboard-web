@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { FigureParamsProps } from "../pages/room/[id]";
+import { useState } from "react";
 
 export type FigureKind = "circle" | "square" | "line" | "curve";
 
@@ -13,15 +14,19 @@ type ButtonClickHandler = {
 };
 
 const Menu = ({ setSelect, figureProps }: MenuProps): JSX.Element => {
+  const [selectedKind, setSelectedKind] = useState<FigureKind>("circle");
   const handleMenuClick: ButtonClickHandler = (e, kind) => {
     setSelect(kind);
+    setSelectedKind(kind);
   };
   const items: FigureKind[] = ["circle", "square", "line", "curve"];
   const itemElements = items.map((item, index) => {
     return (
       <button
         key={index}
-        className={"outline max-h-9 mx-1 hover:bg-yellow-100"}
+        className={`outline max-h-9 mx-1 hover:bg-yellow-100 ${
+          selectedKind == item ? "bg-red-500 hover:bg-red-600" : ""
+        }`}
         onClick={(e) => handleMenuClick(e, item)}
       >
         <Image src={`/${item}.svg`} width={36} height={36} />

@@ -12,6 +12,19 @@ type ChatRoomProps = {
   socketUrl: string;
 };
 
+export type MenuFigureProps = {
+  fill: boolean;
+  lineWidth: number;
+  lineDash: boolean;
+  color: string;
+  rotate: number;
+};
+
+export type FigureParamsProps = {
+  params: MenuFigureProps;
+  setParams: (props: MenuFigureProps) => void;
+};
+
 const Room: NextPage = () => {
   const [name, setName] = useState("");
   const router = useRouter();
@@ -41,6 +54,13 @@ const Room: NextPage = () => {
 
 const ChatRoom = ({ id, name, socketUrl }: ChatRoomProps) => {
   const [menuSelect, setMenuSelect] = useState<FigureKind>("circle");
+  const [figureProps, setFigureProps] = useState<MenuFigureProps>({
+    fill: false,
+    lineWidth: 1,
+    lineDash: false,
+    color: "#000000",
+    rotate: 0,
+  });
   return (
     <>
       <div className={"bg-gray-400"}>
@@ -55,10 +75,17 @@ const ChatRoom = ({ id, name, socketUrl }: ChatRoomProps) => {
       </div>
       <div className={"flex"}>
         <div className={"flex-initial w-3/12"}>
-          <Menu setSelect={setMenuSelect} />
+          {figureProps != null ? (
+            <Menu
+              setSelect={setMenuSelect}
+              figureProps={{ params: figureProps, setParams: setFigureProps }}
+            />
+          ) : (
+            <></>
+          )}
         </div>
         <div className={"flex-initial w-6/12"}>
-          <Blackboard figureKind={menuSelect} socketUrl={socketUrl} />
+          <Blackboard figureKind={menuSelect} socketUrl={socketUrl} figureProps={{ params: figureProps, setParams: setFigureProps }} />
         </div>
         <div className={"flex-initial w-3/12"}>
           <Chat socketUrl={socketUrl} />

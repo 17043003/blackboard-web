@@ -3,6 +3,7 @@ import useWebSocket, { ReadyState } from "react-use-websocket";
 import { FigureKind } from "../components/Menu";
 import { figureFactory } from "../utils/figure/FigureFactory";
 import Figure from "../utils/figure/Figure";
+import { FigureParamsProps } from "../pages/room/[id]";
 
 type Coordinate = {
   x: number;
@@ -19,11 +20,13 @@ type MouseOperateCoordinate = {
 type BlackboardProps = {
   figureKind: FigureKind;
   socketUrl: string;
+  figureProps: FigureParamsProps;
 };
 
 const Blackboard = ({
   figureKind,
   socketUrl,
+  figureProps,
 }: BlackboardProps): JSX.Element => {
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
   const [surfaceContext, setSurfaceContext] =
@@ -96,6 +99,10 @@ const Blackboard = ({
     const figure = figureFactory(figureKind);
     if (figure == null) return;
 
+    // set menu params.
+    // figure.color = figureProps.params.color;
+    Object.assign(figure, figureProps.params)
+
     figure.x1 = coordinate.start.x;
     figure.y1 = coordinate.start.y;
     figure.x2 = clientX;
@@ -115,6 +122,10 @@ const Blackboard = ({
     const { clientX, clientY } = getCoordinateOnCanvas(e.clientX, e.clientY);
     const figure = figureFactory(figureKind);
     if (figure == null) return;
+
+    // set menu params.
+    // figure.color = figureProps.params.color;
+    Object.assign(figure, figureProps.params)
 
     figure.x1 = coordinate.start.x;
     figure.y1 = coordinate.start.y;

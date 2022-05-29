@@ -14,6 +14,12 @@ class Circle implements Figure {
 
   Draw(ctx: CanvasRenderingContext2D) {
     ctx.beginPath();
+    ctx.lineWidth = this.lineWidth;
+    if (this.lineDash) {
+      ctx.setLineDash([5, 15]);
+    } else {
+      ctx.setLineDash([]);
+    }
     ctx.strokeStyle = this.color;
     ctx.ellipse(
       this.x1 + (this.x2 - this.x1) / 2,
@@ -24,7 +30,11 @@ class Circle implements Figure {
       0,
       2 * Math.PI
     );
-    ctx.stroke();
+    if (this.fill) {
+      ctx.fill();
+    } else {
+      ctx.stroke();
+    }
   }
 }
 

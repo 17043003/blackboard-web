@@ -16,9 +16,16 @@ class Line implements Figure {
 
   Draw(ctx: CanvasRenderingContext2D) {
     ctx.beginPath();
+    ctx.lineWidth = this.lineWidth;
+    if (this.lineDash) {
+      ctx.setLineDash([5, 15]);
+    } else {
+      ctx.setLineDash([]);
+    }
     ctx.strokeStyle = this.color;
     ctx.moveTo(this.x1, this.y1);
     ctx.lineTo(this.x2, this.y2);
+
     ctx.stroke();
   }
 }

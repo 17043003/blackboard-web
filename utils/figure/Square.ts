@@ -16,9 +16,21 @@ class Square implements Figure {
     ctx.beginPath();
     ctx.lineJoin = "miter";
     ctx.lineWidth = this.lineWidth;
-    ctx.strokeStyle = this.color;
-    ctx.strokeRect(this.x1, this.y1, this.x2 - this.x1, this.y2 - this.y1);
-    ctx.stroke();
+    if (this.lineDash) {
+      ctx.setLineDash([5, 15]);
+    } else {
+      ctx.setLineDash([]);
+    }
+
+    if (this.fill) {
+      ctx.fillStyle = this.color;
+      ctx.fillRect(this.x1, this.y1, this.x2 - this.x1, this.y2 - this.y1);
+      ctx.fill();
+    } else {
+      ctx.strokeStyle = this.color;
+      ctx.strokeRect(this.x1, this.y1, this.x2 - this.x1, this.y2 - this.y1);
+      ctx.stroke();
+    }
   }
 }
 

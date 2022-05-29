@@ -85,7 +85,11 @@ const ChatRoom = ({ id, name, socketUrl }: ChatRoomProps) => {
           )}
         </div>
         <div className={"flex-initial w-6/12"}>
-          <Blackboard figureKind={menuSelect} socketUrl={socketUrl} figureProps={{ params: figureProps, setParams: setFigureProps }} />
+          <Blackboard
+            figureKind={menuSelect}
+            socketUrl={socketUrl}
+            figureProps={{ params: figureProps, setParams: setFigureProps }}
+          />
         </div>
         <div className={"flex-initial w-3/12"}>
           <Chat socketUrl={socketUrl} />

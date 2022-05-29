@@ -100,8 +100,7 @@ const Blackboard = ({
     if (figure == null) return;
 
     // set menu params.
-    // figure.color = figureProps.params.color;
-    Object.assign(figure, figureProps.params)
+    Object.assign(figure, figureProps.params);
 
     figure.x1 = coordinate.start.x;
     figure.y1 = coordinate.start.y;
@@ -124,8 +123,7 @@ const Blackboard = ({
     if (figure == null) return;
 
     // set menu params.
-    // figure.color = figureProps.params.color;
-    Object.assign(figure, figureProps.params)
+    Object.assign(figure, figureProps.params);
 
     figure.x1 = coordinate.start.x;
     figure.y1 = coordinate.start.y;

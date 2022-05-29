@@ -13,7 +13,6 @@ type ButtonClickHandler = {
 };
 
 const Menu = ({ setSelect, figureProps }: MenuProps): JSX.Element => {
-
   const handleMenuClick: ButtonClickHandler = (e, kind) => {
     setSelect(kind);
   };
@@ -37,13 +36,19 @@ const Menu = ({ setSelect, figureProps }: MenuProps): JSX.Element => {
   const handleLineWidthChange: React.ChangeEventHandler<HTMLInputElement> = (
     e
   ) => {
-    figureProps.setParams({ ...figureProps.params, lineWidth: e.target.valueAsNumber });
+    figureProps.setParams({
+      ...figureProps.params,
+      lineWidth: e.target.valueAsNumber,
+    });
   };
 
   const handleLineDashChange: React.ChangeEventHandler<HTMLInputElement> = (
     e
   ) => {
-    figureProps.setParams({ ...figureProps.params, lineDash: e.target.checked });
+    figureProps.setParams({
+      ...figureProps.params,
+      lineDash: e.target.checked,
+    });
   };
 
   const handleColorChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -53,7 +58,10 @@ const Menu = ({ setSelect, figureProps }: MenuProps): JSX.Element => {
   const handleRotateChange: React.ChangeEventHandler<HTMLInputElement> = (
     e
   ) => {
-    figureProps.setParams({ ...figureProps.params, rotate: e.target.valueAsNumber });
+    figureProps.setParams({
+      ...figureProps.params,
+      rotate: e.target.valueAsNumber,
+    });
   };
 
   const menuItems = () => {

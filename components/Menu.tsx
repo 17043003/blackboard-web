@@ -71,43 +71,63 @@ const Menu = ({ setSelect, figureProps }: MenuProps): JSX.Element => {
 
   const menuItems = () => {
     return (
-      <>
-        <label htmlFor="menu_fill">塗りつぶし</label>
-        <input
-          id="menu_fill"
-          type="checkbox"
-          checked={figureProps.params.fill}
-          onChange={handleFillChange}
-        />
-        <label htmlFor="menu_linewidth">幅</label>
-        <input
-          id="menu_linewidth"
-          type="number"
-          value={figureProps.params.lineWidth}
-          onChange={handleLineWidthChange}
-        />
-        <label htmlFor="menu_linedash">波線</label>
-        <input
-          id="menu_linedash"
-          type="checkbox"
-          checked={figureProps.params.lineDash}
-          onChange={handleLineDashChange}
-        />
-        <label htmlFor="menu_color">色</label>
-        <input
-          id="menu_color"
-          type="color"
-          value={figureProps.params.color}
-          onChange={handleColorChange}
-        />
-        <label htmlFor="menu_rotate">回転</label>
-        <input
-          id="menu_rotate"
-          type="number"
-          value={figureProps.params.rotate}
-          onChange={handleRotateChange}
-        />
-      </>
+      <div className="grid grid-flow-row">
+        <div>
+          <label htmlFor="menu_fill" className="mr-1">
+            塗りつぶし
+          </label>
+          <input
+            id="menu_fill"
+            type="checkbox"
+            checked={figureProps.params.fill}
+            onChange={handleFillChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="menu_linewidth" className="mr-1">
+            幅
+          </label>
+          <input
+            id="menu_linewidth"
+            type="number"
+            value={figureProps.params.lineWidth}
+            onChange={handleLineWidthChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="menu_linedash" className="mr-1">
+            波線
+          </label>
+          <input
+            id="menu_linedash"
+            type="checkbox"
+            checked={figureProps.params.lineDash}
+            onChange={handleLineDashChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="menu_color" className="mr-1">
+            色
+          </label>
+          <input
+            id="menu_color"
+            type="color"
+            value={figureProps.params.color}
+            onChange={handleColorChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="menu_rotate" className="mr-1">
+            回転
+          </label>
+          <input
+            id="menu_rotate"
+            type="number"
+            value={figureProps.params.rotate}
+            onChange={handleRotateChange}
+          />
+        </div>
+      </div>
     );
   };
 

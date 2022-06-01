@@ -31,6 +31,7 @@ class Circle implements Figure {
       2 * Math.PI
     );
     if (this.fill) {
+        ctx.fillStyle = this.color;
       ctx.fill();
     } else {
       ctx.stroke();

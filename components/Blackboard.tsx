@@ -155,25 +155,44 @@ const Blackboard = ({
     return { x, y };
   };
 
+  const clearCanvas = () => {
+    if (canvas.current == null) return;
+    context?.clearRect(0, 0, canvas.current.width, canvas.current.height);
+    surfaceContext?.clearRect(
+      0,
+      0,
+      canvas.current.width,
+      canvas.current.height
+    );
+  };
+
   return (
-    <div className="h-full m-1 relative">
-      <canvas
-        width="400"
-        height="400"
-        ref={canvas}
-        className="outline absolute"
-      ></canvas>
-      <canvas
-        width="400"
-        height="400"
-        ref={surfaceCanvas}
-        className="outline absolute opacity-10"
-        onTouchStart={handleTouchStart}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-      ></canvas>
-    </div>
+    <>
+      <button
+        onClick={clearCanvas}
+        className="border border-blue-500 rounded p-2 bg-blue-400 hover:bg-blue-700 text-white"
+      >
+        Clear
+      </button>
+      <div className="h-full m-1 relative">
+        <canvas
+          width="400"
+          height="400"
+          ref={canvas}
+          className="outline absolute"
+        ></canvas>
+        <canvas
+          width="400"
+          height="400"
+          ref={surfaceCanvas}
+          className="outline absolute opacity-10"
+          onTouchStart={handleTouchStart}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+        ></canvas>
+      </div>
+    </>
   );
 };
 
